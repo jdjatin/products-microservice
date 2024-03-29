@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model product_category{
+  id String @id @default(uuid())
+  title String
+  parent_id String @default("0")
+  isDeleted  Boolean       @default(false)
+  category products[]
+}
+
+model products{
+  id String @id @default(uuid())
+  name String
+  price Int
+  thc Int
+  description String
+  category_id  String
+  category   product_category @relation(fields: [category_id],references: [id])
+  product_image String[]
+  cartItems CartItem[]
+
+}
+
+model cart {
+  id String @id @default(uuid())
+  user_id String @unique
+  items   CartItem[]
+
+}
+
+model CartItem {
+
+  id        String  @id @default(uuid())
+  cart_id    String
+  product_id String
+  quantity  Int
+  cart      cart    @relation(fields: [cart_id], references: [id])
+  product   products @relation(fields: [product_id], references: [id])
+
+  @@unique([cart_id, product_id])
+
+}
+
+model transactions {
+
+id String @id @default(uuid())
+user_id String @unique
+transaction_id String @unique
+amount Int
+status Status
+payload Json?
+
+}
+
+enum Status {
+  pending
+  completed 
+  failed
+}
