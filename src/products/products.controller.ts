@@ -6,7 +6,7 @@ import { ProductsService } from './products.service';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @MessagePattern({purpose:'createProduct'})
+  @MessagePattern({purpose:"createProduct"})
   create(@Payload() data ) {
     return this.productsService.create(data);
   }

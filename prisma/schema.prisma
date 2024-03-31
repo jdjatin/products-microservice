@@ -30,34 +30,34 @@ model products{
   category_id  String
   category   product_category @relation(fields: [category_id],references: [id])
   product_image String[]
-  cartItems CartItem[]
+  // cartItems CartItem[]
 
 }
 
-model cart {
-  id String @id @default(uuid())
-  user_id String @unique
-  items   CartItem[]
+// model cart {
+//   id String @id @default(uuid())
+//   user_id String? @unique()
+//   items   CartItem[]
 
-}
+// }
 
-model CartItem {
+// model CartItem {
 
-  id        String  @id @default(uuid())
-  cart_id    String
-  product_id String
-  quantity  Int
-  cart      cart    @relation(fields: [cart_id], references: [id])
-  product   products @relation(fields: [product_id], references: [id])
+//   id        String  @id @default(uuid())
+//   cart_id    String
+//   product_id String
+//   quantity  Int
+//   cart      cart    @relation(fields: [cart_id], references: [id])
+//   product   products @relation(fields: [product_id], references: [id])
 
-  @@unique([cart_id, product_id])
+//   @@unique([cart_id, product_id])
 
-}
+// }
 
 model transactions {
 
 id String @id @default(uuid())
-user_id String @unique
+user_id String
 transaction_id String @unique
 amount Int
 status Status
