@@ -43,7 +43,7 @@ export class PaymentService {
             amount: multipliedAmount,
             currency: 'CAD',
             callback_method: "get",
-            callback_url: `${process.env.URL}/payment-confirmation`,
+            callback_url: `${process.env.URL}/payment-success`,
             description: 'For XYZ purpose',
             customer: {
               name: 'Jatin',
